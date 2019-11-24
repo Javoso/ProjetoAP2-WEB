@@ -1,0 +1,193 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>br.com.TBWeb2</groupId>
+	<artifactId>Trabalho-WEB2</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Projeto Trabalho WEB2</name>
+	<description>Projeto Trabalho WEB2</description>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<!-- FileUpload -->
+		<commons.fileupload.version> 1.3.1</commons.fileupload.version>
+
+		<!-- Hibernate / JPA -->
+		<hibernate.version>4.3.9.Final</hibernate.version>
+
+		<!-- Driver MySQL -->
+		<mysql.connector.version>8.0.17</mysql.connector.version>
+
+		<!-- Primefaces -->
+		<primefaces.version>7.0</primefaces.version>
+
+		<!-- JSF Version -->
+		<javax.faces.version>2.2.10</javax.faces.version>
+
+		<!-- Weld - Implementação do CDI -->
+		<weld.version>2.2.10.Final</weld.version>
+
+		<!-- Weld depende do Jandex -->
+		<jandex.version>1.2.3.Final</jandex.version>
+
+		<!-- Apache Commons -->
+		<org.apache.commons.version>3.4</org.apache.commons.version>
+
+		<org.apache.poi.version>3.17</org.apache.poi.version>
+
+		<com.lowagie.version>2.1.7</com.lowagie.version>
+
+		<org.apache.xmlbeans.version>3.1.0</org.apache.xmlbeans.version>
+
+		<org.springframework-security-web.version>3.1.4.RELEASE</org.springframework-security-web.version>
+
+		<org.springframework-security-config.version>3.1.4.RELEASE</org.springframework-security-config.version>
+
+		<org.springframework-security-core.version>3.1.4.RELEASE</org.springframework-security-core.version>
+
+		<javax.servlet.version>3.0.1</javax.servlet.version>
+
+		<commons-loggin.version>1.2</commons-loggin.version>
+
+		<primefaces.extensions.version>6.2.11</primefaces.extensions.version>
+
+		<!-- <hibernate.jpamodelgen.version>1.0.0.Final</hibernate.jpamodelgen.version> -->
+
+	</properties>
+
+	<dependencies>
+
+		<!-- <dependency> -->
+		<!-- <groupId>org.hibernate</groupId> -->
+		<!-- <artifactId>hibernate-jpamodelgen</artifactId> -->
+		<!-- <version>${hibernate.jpamodelgen.version}</version> -->
+		<!-- </dependency> -->
+
+		<dependency>
+			<groupId>org.primefaces.extensions</groupId>
+			<artifactId>primefaces-extensions</artifactId>
+			<version>${primefaces.extensions.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>${commons.fileupload.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${org.apache.commons.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>${primefaces.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.glassfish</groupId>
+			<artifactId>javax.faces</artifactId>
+			<version>${javax.faces.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.weld.servlet</groupId>
+			<artifactId>weld-servlet</artifactId>
+			<version>${weld.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss</groupId>
+			<artifactId>jandex</artifactId>
+			<version>${jandex.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.connector.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.xmlbeans</groupId>
+			<artifactId>xmlbeans</artifactId>
+			<version>${org.apache.xmlbeans.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.lowagie</groupId>
+			<artifactId>itext</artifactId>
+			<version>${com.lowagie.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>${org.apache.poi.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${org.springframework-security-core.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${org.springframework-security-config.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${org.springframework-security-web.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>${commons-loggin.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${javax.servlet.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<finalName>Trabalho-WEB2</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.0</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<packaging>war</packaging>
+</project>

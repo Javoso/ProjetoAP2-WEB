@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<f:facet name="first">
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+	</f:facet>
+
+	<!-- 	<link rel="shortcut icon" type="image/x-icon" -->
+	<!-- 		href="#{facesContext.externalContext.requestContextPath}/resources/img/logo_mini.png" /> -->
+
+
+	<title>Trabalho Web 2</title>
+
+	<h:outputScript target="body" library="primefaces"
+		name="jquery/jquery.js" />
+
+	<h:outputScript target="body" library="js" name="app.js" />
+
+	<h:outputScript target="body" library="js" name="ripple-effect.js" />
+</h:head>
+
+<h:body>
+
+	<style>
+.centralizado, .centralizado img {
+	text-align: center !important;
+}
+</style>
+	<f:metadata>
+		<f:viewParam name="dummy" />
+		<f:event listener="#{loginController.preRender}" type="preRenderView">
+		</f:event>
+	</f:metadata>
+	<div style="width: 320px; margin: auto; margin-top: 20px;"
+		class="animated zoomIn">
+		<div class="card shadow-effect hei-auto-on-mobile">
+
+			<div class="centralizado" style="margin: auto;">
+				<p:graphicImage library="img" name="avatar_login.png" width="150px" />
+				<br />
+				<p:outputLabel value="Login"
+					style="font-size: 25px; color: #555; margin-top: 20px; text-align: center;" />
+			</div>
+
+			<div class="ui-g-12">
+				<p:growl id="msg" life="4000" showDetail="true" />
+			</div>
+
+
+			<div style="padding: 10px 20px; text-align: center;"
+				class=" ui-lg-4 ui-md-8 ui-sm-12">
+
+				<h:form prependId="false">
+					<h:panelGrid columns="2" cellpadding="2">
+
+						<h:outputLabel for="j_username" value="Email:"
+							style="font-size: 20px; color: #555;" />
+						<p:inputText id="j_username" required="true"
+							value="#{loginController.email}"
+							requiredMessage="Campo 'Email' é obrigatório." label="email" />
+
+						<h:outputLabel for="j_password" value="Senha:"
+							style="font-size: 20px; color: #555;" />
+						<p:password id="j_password" required="true"
+							requiredMessage="Campo 'Senha' é obrigatório." label="senha" />
+
+						<p:spacer />
+						<p:spacer />
+						<p:spacer />
+
+						<p:commandButton value="Acessar" icon="fa fa sign-out"
+							ajax="false" action="#{loginController.logar}"
+							style="height: 35px" styleClass="button-blue" id="logar"
+							outcome="Inicio" />
+
+					</h:panelGrid>
+				</h:form>
+			</div>
+		</div>
+	</div>
+</h:body>
+</html>

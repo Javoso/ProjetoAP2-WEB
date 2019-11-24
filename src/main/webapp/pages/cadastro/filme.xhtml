@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/Layout.xhtml">
+
+	<h:head>
+		<title>Filmes</title>
+		<h:outputStylesheet library="css" name="style.css" />
+		<h:outputScript library="js" name="app.js" />
+	</h:head>
+
+	<f:metadata>
+		<f:viewParam name="id" value="#{filmeController.idFilme}" />
+		<f:event listener="#{filmeController.prepararParaEditar}"
+			type="preRenderView"></f:event>
+	</f:metadata>
+
+	<ui:define name="content">
+		<h:body>
+
+			<div class="ui-fluid">
+
+				<h:form id="menu">
+					<p:menubar>
+						<p:submenu icon="pi pi-file" label="Cadastrar">
+							<p:menuitem outcome="/pages/cadastro/filme" value="Filme" />
+						</p:submenu>
+
+						<p:submenu icon="pi pi-list" label="Listar">
+							<p:menuitem outcome="/pages/exibir/filmes" value="Filmes" />
+						</p:submenu>
+					</p:menubar>
+				</h:form>
+
+				<div class="ui-g-12">
+					<p:growl id="msg" life="4000" showDetail="true" />
+				</div>
+
+				<h:form id="form">
+
+					<h1>#{filmeController.filme.id == null ? 'Cadastrar' :
+						'Editar'} filme</h1>
+
+					<div class="ui-g-4 ui-lg-4 ui-md-8 ui-sm-12">
+						<p:outputLabel for="nome" value="Nome" />
+						<p:inputText id="nome" value="#{filmeController.filme.nome}"
+							required="true" requiredMessage="Campo 'Nome' é obrigatório" />
+						<p:message for="nome" />
+					</div>
+
+
+					<div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12">
+						<p:outputLabel for="data-lancamento" value="Data de lançamento" />
+						<p:calendar id="data-lancamento"
+							value="#{filmeController.filme.dataLancamento}"
+							pattern="dd/MM/yyyy" required="true"
+							requiredMessage="Campo 'Data de Lancamento' é obrigatório" />
+						<p:message for="data-lancamento" />
+					</div>
+					<div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12">
+						<p:outputLabel for="atores" value="Atores: " />
+						<p:spacer />
+						<p:selectCheckboxMenu id="atores"
+							value="#{filmeController.filme.atores}" multiple="true"
+							filter="true" filterMatchMode="startsWith"
+							converter="atorConverter"
+							requiredMessage="Campo 'Atores' é obrigatório">
+							<f:selectItems value="#{atorController.atores}" var="ator"
+								itemLabel="#{ator.nome}" rendered="#{ator.status eq 'ATIVADO'}" />
+							<f:attribute name="collectionType" value="java.util.ArrayList" />
+						</p:selectCheckboxMenu>
+						<p:message for="atores" />
+					</div>
+
+					<div class="ui-g-12 ui-g-nopad">
+
+						<div class="ui-g-4 ui-lg-4 ui-md-12 ui-sm-12">
+							<p:outputLabel for="descricao" value="Descrição" />
+							<p:inputTextarea id="descricao"
+								value="#{filmeController.filme.descricao}" required="true"
+								requiredMessage="Campo 'Descricao' é obrigatório" />
+							<p:message for="descricao" />
+						</div>
+
+						<div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12">
+							<p:outputLabel for="genero" value="Gênero" />
+
+							<p:selectOneMenu id="genero"
+								value="#{filmeController.filme.genero}"
+								converter="generoConverter"
+								style="background-color:transparent;" required="true"
+								requiredMessage="Campo 'Gêneros' é obrigatório">
+
+								<f:selectItem itemLabel="Selecione um gênero"
+									noSelectionOption="true" />
+								<f:selectItems value="#{generoController.generos}" var="genero"
+									itemLabel="#{genero.nome}" itemValue="#{genero}" />
+							</p:selectOneMenu>
+							<p:message for="genero" />
+						</div>
+						<div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12">
+							<p:outputLabel for="imagem" value="Image" />
+							<p:panelGrid rendered="#{filmeController.filme.imagem != null}">
+								<f:facet name="header">
+									<img src="#{filmeController.filme.imagem}" />
+								</f:facet>
+							</p:panelGrid>
+							<p:fileUpload id="imagem"
+								rendered="#{filmeController.filme.imagem == null}"
+								mode="advanced" dragDropSupport="true" sizeLimit="20000"
+								fileLimit="1" required="true"
+								fileUploadListener="#{filmeController.handleFileUpload}" />
+							<p:message for="imagem" />
+						</div>
+					</div>
+					<div class="ui-g-2 ui-lg-2 ui-md-4 ui-sm-12">
+						<p:commandButton rendered="#{filmeController.filme.id == null}"
+							action="#{filmeController.cadastrar}" value="Cadastrar"
+							update="form" icon="fa fa-save" />
+
+						<p:commandButton rendered="#{filmeController.filme.id != null}"
+							action="#{filmeController.editar}" value="Editar" update="form"
+							icon="fa fa-pencil" />
+					</div>
+
+				</h:form>
+			</div>
+		</h:body>
+	</ui:define>
+</ui:composition>

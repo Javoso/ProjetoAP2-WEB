@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/Layout.xhtml">
+
+	<h:head>
+		<title>Filme</title>
+	</h:head>
+
+	<ui:define name="content">
+		<h:body>
+			<h:form id="menu">
+				<p:menubar>
+					<p:submenu icon="pi pi-file" label="Cadastrar"
+						rendered="#{usuarioLogado.admin}">
+						<p:menuitem outcome="/pages/cadastro/filme" value="Filme" />
+					</p:submenu>
+
+					<p:submenu icon="pi pi-list" label="Listar">
+						<p:menuitem outcome="/pages/exibir/filmes" value="Filmes" />
+					</p:submenu>
+				</p:menubar>
+				<br />
+			</h:form>
+
+			<div class="ui-g-12">
+				<p:growl id="msg" life="4000" showDetail="true" />
+			</div>
+
+
+			<h:form id="tabela">
+
+				<p:dataTable var="f" value="#{filmeController.filmes}"
+					rowHover="true" sortBy="#{f.nome}">
+
+
+					<f:facet name="header">
+						<h2>Lista de filmes</h2>
+					</f:facet>
+
+					<p:column headerText="$" style="width:50px; height: 50px;">
+				#{f.id}
+			</p:column>
+
+					<p:column headerText="Nome">
+				#{f.nome}
+			</p:column>
+
+					<p:column headerText="Descrição">
+				#{f.descricao}
+			</p:column>
+
+					<p:column headerText="Gênero"
+						style="text-align: center; width:60px;">
+				#{f.genero.nome}
+			</p:column>
+
+					<p:column headerText="Imagem">
+
+						<p:lightBox styleClass="imagebox">
+							<h:outputLink value="#{f.imagem}">
+								<img src="#{f.imagem}" style="height: 70px; width: 70px" />
+							</h:outputLink>
+						</p:lightBox>
+					</p:column>
+
+					<p:column headerText="Data de Lançamento">
+				#{f.dataLancamento}
+			</p:column>
+
+					<p:column headerText="Atores">
+						<ui:repeat var="ator" value="#{f.atores}">
+							<p:commandButton value="#{ator.nome}"
+								rendered="#{ator.status eq 'ATIVADO'}" update=":tabela:detalhes"
+								oncomplete="PF('ator-detalhes').show()" style="margin: 5px;">
+								<f:setPropertyActionListener value="#{ator}"
+									target="#{filmeController.atorMostrar}" />
+							</p:commandButton>
+						</ui:repeat>
+					</p:column>
+
+					<p:column headerText="Ações" style="text-align: center; "
+						rendered="#{usuarioLogado.admin}">
+						<p:button value="Editar" immediate="true" icon="fa fa-pencil"
+							style="margin: 5px;" outcome="/pages/cadastro/filme">
+							<f:param name="id" value="#{f.id}" />
+						</p:button>
+
+						<p:commandButton action="#{filmeController.excluir}"
+							value="Excluir" immediate="true" update="tabela"
+							icon="fa fa-trash" style="background: #D92F21; border: none;">
+							<f:setPropertyActionListener value="#{f}"
+								target="#{filmeController.filme}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+
+				<br />
+				<br />
+				<p:overlayPanel style="float:right;" id="detalhes"
+					widgetVar="ator-detalhes" showEffect="fade" hideEffect="fade"
+					showCloseIcon="true">
+					<p:outputPanel style="text-align:center;">
+						<p:panelGrid columns="2"
+							rendered="#{filmeController.atorMostrar.id!=null}">
+
+							<f:facet name="header">
+								<img src="#{filmeController.atorMostrar.imagem}" />
+							</f:facet>
+
+							<h:outputText value="Nome: " style="width:60px" />
+							<h:outputText value="#{filmeController.atorMostrar.nome}" />
+
+							<h:outputText value="Sobrenome: " />
+							<h:outputText value="#{filmeController.atorMostrar.sobrenome}" />
+
+							<h:outputText value="Idade: " />
+							<h:outputText value="#{filmeController.atorMostrar.idade}" />
+						</p:panelGrid>
+					</p:outputPanel>
+				</p:overlayPanel>
+
+				<p:dialog widgetVar="image" id="imagem-filme"
+					header="Visualizar imagem" showEffect="clip" hideEffect="clip"
+					modal="true" position="center" closeOnEscape="true"
+					resizable="false" responsive="true">
+
+					<p:panelGrid columns="1" layout="grid"
+						styleClass="panelgrid-noborder">
+						<center>
+							<img src="#{filmeController.filme.imagem}" />
+						</center>
+					</p:panelGrid>
+				</p:dialog>
+			</h:form>
+		</h:body>
+	</ui:define>
+</ui:composition>

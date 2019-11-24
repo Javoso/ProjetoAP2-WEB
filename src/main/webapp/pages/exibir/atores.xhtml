@@ -1,0 +1,90 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="/WEB-INF/templates/Layout.xhtml">
+	<ui:define name="content">
+		<h:head>
+			<title>Lista de Atores</title>
+		</h:head>
+		<h:body>
+			<h:form id="menu">
+				<p:menubar>
+					<p:submenu icon="pi pi-file" label="Cadastrar"
+						rendered="#{usuarioLogado.admin}">
+						<p:menuitem outcome="/pages/cadastro/ator" value="Ator" />
+					</p:submenu>
+
+					<p:submenu icon="pi pi-list" label="Listar">
+						<p:menuitem outcome="atores" value="Atores" />
+					</p:submenu>
+				</p:menubar>
+				<br />
+			</h:form>
+
+			<div class="ui-g-12">
+				<p:growl id="msg" life="4000" showDetail="true" />
+			</div>
+
+
+			<h:form id="tabela">
+
+				<p:dataTable var="a" value="#{atorController.atores}"
+					rowHover="true" sortBy="#{a.nome}">
+
+					<f:facet name="header">
+						<h2>Lista de atores</h2>
+					</f:facet>
+
+					<p:column headerText="$" style="width: 30px">
+				#{a.id}
+			</p:column>
+					<p:column headerText="Nome">
+				#{a.nome}
+			</p:column>
+
+					<p:column headerText="Sobrenome">
+				#{a.sobrenome}
+			</p:column>
+
+					<p:column headerText="Idade">
+				#{a.idade}
+			</p:column>
+
+					<p:column headerText="Imagem">
+						<img src="#{a.imagem}"
+							style="width: 70px; height: 70px; margin-left: 17px;" />
+					</p:column>
+
+					<p:column headerText="Sexo">
+				#{a.sexo}
+			</p:column>
+
+					<p:column headerText="Ações" style="text-align: center;"
+						rendered="#{usuarioLogado.admin}">
+						<p:button value="Editar" immediate="true" style="margin: 5px;"
+							icon="pi pi-pencil" outcome="/pages/cadastro/ator">
+							<f:param name="id" value="#{a.id}" />
+						</p:button>
+
+						<p:commandButton action="#{atorController.excluir}"
+							value="Excluir" immediate="true" update="tabela"
+							icon="pi pi-trash" style="background: #D92F21; border: none;">
+
+							<f:setPropertyActionListener value="#{a}"
+								target="#{atorController.ator}" />
+						</p:commandButton>
+					</p:column>
+
+				</p:dataTable>
+
+
+			</h:form>
+
+		</h:body>
+	</ui:define>
+</ui:composition>
+</html>

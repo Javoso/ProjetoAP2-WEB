@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<ui:composition template="/WEB-INF/templates/Layout.xhtml">
+	<ui:define name="content">
+		<h:head charset="UTF-8">
+			<title>Cadastro de Usuário</title>
+		</h:head>
+
+		<f:metadata>
+			<f:viewParam name="id" value="#{usuarioController.idUsuario}" />
+			<f:event listener="#{usuarioController.prepararParaEditar}"
+				type="preRenderView" />
+		</f:metadata>
+
+		<h:body>
+
+			<div class="ui-fluid">
+				<h:form id="menu">
+					<p:menubar>
+						<p:submenu icon="pi pi-file" label="Cadastrar">
+							<p:menuitem outcome="usuario" value="Usuário" />
+						</p:submenu>
+
+						<p:submenu icon="pi pi-list" label="Listar">
+							<p:menuitem outcome="/pages/exibir/usuarios" value="Usuários" />
+						</p:submenu>
+					</p:menubar>
+				</h:form>
+
+				<div class="ui-g-12">
+					<p:growl id="msg" life="8000" showDetail="true" />
+				</div>
+
+				<h:form id="form">
+
+					<h1>#{usuarioController.usuario.id == null ? 'Cadastrar' :
+						'Editar'} ator</h1>
+
+					<div class="ui-g-4 ui-lg-4 ui-md-8 ui-sm-12">
+						<p:outputLabel for="nome" value="Nome" />
+						<p:inputText id="nome" value="#{usuarioController.usuario.nome}"
+							required="true" requiredMessage="Campo 'Nome' é obrigatório" />
+						<p:message for="nome" />
+					</div>
+
+					<div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12">
+						<p:outputLabel for="email" value="Email" />
+						<p:inputText id="email" value="#{usuarioController.usuario.email}"
+							required="true" requiredMessage="Campo 'Email' é obrigatório" />
+						<p:message for="email" />
+					</div>
+
+					<div class="ui-g-4 ui-lg-4 ui-md-12 ui-sm-12">
+						<p:outputLabel for="senha" value="Senha" />
+						<p:password id="senha" value="#{usuarioController.usuario.senha}"
+							required="true" requiredMessage="Campo 'Senha' é obrigatório" />
+						<p:message for="senha" />
+					</div>
+					<div class="ui-g-12 ui-g-nopad">
+						<div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12">
+							<p:outputLabel for="foto" value="Foto" />
+							<p:panelGrid
+								rendered="#{usuarioController.usuario.imagem != null}">
+								<f:facet name="header">
+									<img src="#{usuarioController.usuario.imagem}" />
+								</f:facet>
+							</p:panelGrid>
+							<p:fileUpload id="foto"
+								rendered="#{usuarioController.usuario.imagem == null}"
+								mode="advanced" dragDropSupport="true" sizeLimit="20000"
+								fileLimit="1" required="true"
+								fileUploadListener="#{usuarioController.handleFileUpload}" />
+							<p:message for="foto" />
+						</div>
+
+						<div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12">
+							<p:outputLabel for="permissao" value="Permissões" />
+							<p:selectCheckboxMenu id="permissao"
+								value="#{usuarioController.usuario.permissoes}" multiple="true"
+								filter="true" filterMatchMode="startsWith"
+								converter="permissaoConverter"
+								requiredMessage="Campo 'Permissões' é obrigatório">
+								<f:selectItems value="#{usuarioController.permissoes}"
+									var="permissao" itemLabel="#{permissao.descricao}" />
+								<f:attribute name="collectionType" value="java.util.ArrayList" />
+							</p:selectCheckboxMenu>
+
+							<p:message for="permissao" />
+						</div>
+					</div>
+
+					<div class="ui-g-2 ui-lg-2 ui-md-4 ui-sm-12">
+						<p:commandButton
+							rendered="#{usuarioController.usuario.id == null}"
+							action="#{usuarioController.cadastrar()}" value="Cadastrar"
+							update="form" icon="pi pi-save" />
+
+						<p:commandButton
+							rendered="#{usuarioController.usuario.id != null}"
+							action="#{usuarioController.editar()}" value="Editar"
+							update="form" icon="pi pi-pencil" />
+						<br /> <br /> <br />
+						<p:commandButton value="Documento" update="form"
+							oncomplete="PF('dlg-document').show()" icon="pi pi-file" />
+					</div>
+					<p:dialog widgetVar="dlg-document" responsive="true" width="500px"
+						height="500px">
+
+						<p:fileUpload id="documento" required="true"
+							uploadLabel="Documento" cancelLabel="Cancelar"
+							requiredMessage="O campo 'Arquivo' é obrigatório" mode="advanced"
+							sizeLimit="5120000" multiple="false"
+							allowTypes="/(\.|\/)(jpe?g|png|pdf)$/"
+							invalidFileMessage="São permitidos somente arquivos (jpeg, jpg, png e pdf)"
+							invalidSizeMessage="O tamanho máximo permitido é de 5MB."
+							fileLimitMessage="Permitido apenas 1 arquivo" auto="true"
+							fileUploadListener="#{usuarioController.handleFileUploadDocument}">
+						</p:fileUpload>
+						<p:commandButton>
+							<p:ajax update="preView" />
+						</p:commandButton>
+						<br />
+						<pe:documentViewer id="preView" width="350px" height="350px"
+							value="#{usuarioController.content}" />
+					</p:dialog>
+				</h:form>
+			</div>
+
+		</h:body>
+	</ui:define>
+</ui:composition>
+</html>

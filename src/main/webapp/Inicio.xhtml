@@ -1,0 +1,101 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/Layout.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="dummy" />
+		<f:event listener="#{graficoController.preRender}"
+			type="preRenderView" />
+	</f:metadata>
+
+	<ui:define name="content">
+
+		<style type="text/css">
+.right div {
+	float: right;
+}
+</style>
+
+		<h1>Dashboard</h1>
+
+		<div class="ui-g-12">
+			<p:growl id="msg" life="4000" showDetail="true" />
+		</div>
+
+		<h:form id="selectOptions">
+			<div class="select-">
+				<div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12" id="DivA">
+					<p:selectOneMenu id="atores" value="#{graficoController.ator}"
+						rendered="#{usuarioLogado.admin}" converter="atorConverter"
+						style="background-color:transparent;">
+						<f:selectItem itemLabel="Selecione um ator"
+							noSelectionOption="true" />
+						<f:selectItems value="#{atorController.atores}" var="ator"
+							itemLabel="#{ator.nome}" />
+						<p:ajax process="@this" listener="#{graficoController.selectAtor}"
+							update="graficoBarra" />
+					</p:selectOneMenu>
+					<p:message for="atores" />
+				</div>
+
+				<div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12" id="DivLateral">
+					<p:selectOneMenu id="genero" value="#{graficoController.genero}"
+						rendered="#{usuarioLogado.admin}" converter="generoConverter"
+						style="background-color:transparent;">
+						<f:selectItem itemLabel="Selecione um gênero"
+							noSelectionOption="true" />
+						<f:selectItems value="#{generoController.generos}" var="genero"
+							itemLabel="#{genero.nome}" itemValue="#{genero}" />
+						<p:ajax process="@this"
+							listener="#{graficoController.selectGenero}"
+							update="graficoBarra" />
+					</p:selectOneMenu>
+					<p:message for="genero" />
+				</div>
+			</div>
+		</h:form>
+
+
+		<p:chart id="graficoBarra" type="bar"
+			model="#{graficoController.modelBar}"
+			rendered="#{usuarioLogado.admin}" responsive="true" />
+
+
+		<h:panelGrid columns="3" columnClasses="right, left">
+
+			<p:chart type="pie" model="#{graficoController.pieModel}"
+				rendered="#{usuarioLogado.admin}" style="width:350px;height:320px" />
+
+			<p:chart type="pie" model="#{graficoController.pieModel2}"
+				rendered="#{usuarioLogado.admin}" style="width:350px;height:320px" />
+
+			<p:chart type="pie" model="#{graficoController.pieModel3}"
+				rendered="#{usuarioLogado.admin}" style="width:350px;height:320px" />
+		</h:panelGrid>
+
+		<div id="DivA-card" class="container"
+			style="background: #00BCD4; margin-right: 10px;">
+			<div style="margin-top: 10px;" />
+			<div style="font-size: 20px; color: #fafafa;">Atores</div>
+			<div style="font-size: 27px; color: #fafafa; margin-left: 15px;">#{homeController.numeroAtores}</div>
+		</div>
+		<div id="DivLateral-card" class="container"
+			style="background: #B37753; margin-right: 10px;">
+			<div style="margin-top: 10px;" />
+			<div style="font-size: 20px; color: #fafafa;">Filmes</div>
+			<div style="font-size: 27px; color: #fafafa; margin-left: 15px;">#{homeController.numeroFilmes}</div>
+		</div>
+		<div id="DivLateral-card" class="container"
+			style="background: #624194;">
+			<div style="margin-top: 10px;" />
+			<div style="font-size: 20px; color: #fafafa;">Gêneros</div>
+			<div style="font-size: 27px; color: #fafafa; margin-left: 15px;">#{homeController.numeroGeneros}</div>
+
+		</div>
+
+	</ui:define>
+
+</ui:composition>

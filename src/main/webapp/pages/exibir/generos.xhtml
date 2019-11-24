@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/Layout.xhtml">
+
+	<h:head>
+		<title>PPW</title>
+	</h:head>
+
+	<ui:define name="content">
+		<h:body>
+			<h:form id="menu">
+				<p:menubar>
+					<p:submenu icon="pi pi-file" label="Cadastrar"
+						rendered="#{usuarioLogado.admin}">
+						<p:menuitem outcome="/pages/cadastro/genero" value="Genero" />
+					</p:submenu>
+
+					<p:submenu icon="pi pi-list" label="Listar">
+						<p:menuitem outcome="/pages/exibir/generos" value="Generos" />
+					</p:submenu>
+				</p:menubar>
+				<br />
+			</h:form>
+
+			<div class="ui-g-12">
+				<p:growl id="msg" life="4000" showDetail="true" />
+			</div>
+
+
+			<h:form id="tabela">
+
+				<p:dataTable var="g" value="#{generoController.generos}"
+					rowHover="true" sortBy="#{g.nome}">
+
+					<f:facet name="header">
+						<h2>Lista de Gêneros</h2>
+					</f:facet>
+
+					<p:column headerText="$">
+				#{g.id}
+			</p:column>
+
+					<p:column headerText="Nome">
+				#{g.nome}
+			</p:column>
+
+
+
+					<p:column headerText="Ações" style="text-align: center;"
+						rendered="#{usuarioLogado.admin}">
+						<p:button value="Editar" immediate="true" icon="pi pi-pencil"
+							outcome="/pages/cadastro/genero">
+							<f:param name="id" value="#{g.id}" />
+						</p:button>
+
+						<p:commandButton action="#{generoController.excluir}"
+							value="Excluir" immediate="true" update="tabela"
+							icon="pi pi-trash" style="background: #D92F21; border: none;">
+
+							<f:setPropertyActionListener value="#{g}"
+								target="#{generoController.genero}" />
+						</p:commandButton>
+					</p:column>
+
+				</p:dataTable>
+
+			</h:form>
+
+		</h:body>
+	</ui:define>
+</ui:composition>

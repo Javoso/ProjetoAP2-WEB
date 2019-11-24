@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/templates/Layout.xhtml">
+	<ui:define name="content">
+		<h:head charset="UTF-8">
+			<title>Cadastro de Ator</title>
+		</h:head>
+
+		<f:metadata>
+			<f:viewParam name="id" value="#{atorController.idAtor}" />
+			<f:event listener="#{atorController.prepararParaEditar}"
+				type="preRenderView" />
+		</f:metadata>
+
+		<h:body>
+
+			<div class="ui-fluid">
+				<h:form id="menu">
+					<p:menubar>
+						<p:submenu icon="pi pi-file" label="Cadastrar">
+							<p:menuitem outcome="ator" value="Ator" />
+						</p:submenu>
+
+						<p:submenu icon="pi pi-list" label="Listar">
+							<p:menuitem outcome="/pages/exibir/atores" value="Atores" />
+						</p:submenu>
+					</p:menubar>
+				</h:form>
+
+				<div class="ui-g-12">
+					<p:growl id="msg" life="8000" showDetail="true" />
+				</div>
+
+				<h:form id="form">
+
+					<h1>#{atorController.ator.id == null ? 'Cadastrar' : 'Editar'}
+						ator</h1>
+
+					<div class="ui-g-4 ui-lg-4 ui-md-8 ui-sm-12">
+						<p:outputLabel for="nome" value="Nome" />
+						<p:inputText id="nome" value="#{atorController.ator.nome}"
+							required="true" requiredMessage="Campo 'Nome' é obrigatório" />
+						<p:message for="nome" />
+					</div>
+
+					<div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12">
+						<p:outputLabel for="sobrenome" value="Sobrenome" />
+						<p:inputText id="sobrenome"
+							value="#{atorController.ator.sobrenome}" required="true"
+							requiredMessage="Campo 'Sobrenome' é obrigatório" />
+						<p:message for="sobrenome" />
+					</div>
+
+					<div class="ui-g-4 ui-lg-4 ui-md-12 ui-sm-12">
+						<p:outputLabel for="idade" value="Idade" />
+						<p:inputText id="idade" value="#{atorController.ator.idade}"
+							required="true" requiredMessage="Campo 'Idade' é obrigatório" />
+						<p:message for="idade" />
+					</div>
+					<div class="ui-g-12 ui-g-nopad">
+						<div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12">
+							<p:outputLabel for="foto" value="Foto" />
+							<p:fileUpload id="foto" mode="advanced" dragDropSupport="true"
+								sizeLimit="10000" fileLimit="1"
+								fileUploadListener="#{atorController.handleFileUpload}" />
+							<p:message for="foto" />
+						</div>
+
+
+						<div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12">
+							<p:outputLabel for="sexo" value="Sexo" />
+							<p:selectOneMenu id="sexo" value="#{atorController.ator.sexo}"
+								required="true" requiredMessage="Campo 'Sexo' é obrigatório">
+								<f:selectItem itemLabel="-- Selecione --"
+									noSelectionOption="true" />
+								<f:selectItems value="#{atorController.sexos}" var="sexo"
+									itemLabel="#{sexo}" itemValue="#{sexo}" />
+
+							</p:selectOneMenu>
+							<p:message for="sexo" />
+						</div>
+					</div>
+
+					<div class="ui-g-2 ui-lg-2 ui-md-4 ui-sm-12">
+						<p:commandButton rendered="#{atorController.ator.id == null}"
+							action="#{atorController.cadastrar()}" value="Cadastrar"
+							update="form" icon="pi pi-save" />
+
+						<p:commandButton rendered="#{atorController.ator.id != null}"
+							action="#{atorController.editar()}" value="Editar" update="form"
+							icon="pi pi-pencil" />
+					</div>
+
+				</h:form>
+			</div>
+
+		</h:body>
+	</ui:define>
+</ui:composition>
+</html>

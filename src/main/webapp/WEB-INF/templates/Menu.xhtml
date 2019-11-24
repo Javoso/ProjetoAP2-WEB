@@ -1,0 +1,33 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+	<nav class="aw-menu">
+
+		<img alt="" src="#{usuarioLogado.usuarioLogado.imagem}"
+			class="image-user" />
+
+		<h3 style="margin-left: 25px;">#{usuarioLogado.usuarioLogado.nome}</h3>
+
+
+		<ul>
+			<li><h:link outcome="/Inicio">
+					<i class="fa  fa-fw fa-home"></i>Dashboard</h:link></li>
+			<li><h:link outcome="/pages/exibir/atores">
+					<i class="fa  fa-fw fa-user"></i>Ator</h:link></li>
+			<li><h:link outcome="/pages/exibir/filmes">
+					<i class=" fa fa-fw fa-video-camera"></i>Filme</h:link></li>
+			<li><h:link outcome="/pages/exibir/generos">
+					<i class="fa  fa-fw fa-file-text"></i>Gênero</h:link></li>
+			<li><h:link rendered="#{usuarioLogado.admin}"
+					outcome="/pages/exibir/usuarios">
+					<i class="fa  fa-fw fa-users"></i>Usuário</h:link></li>
+			<h:form>
+				<li><h:commandLink action="#{usuarioLogado.doLogout}">
+						<i class="fa fa-sign-out"></i>Logout
+			</h:commandLink></li>
+			</h:form>
+		</ul>
+	</nav>
+
+</ui:composition>

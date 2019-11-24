@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/Layout.xhtml">
+
+	<h:head>
+		<title>PPW</title>
+		<h:outputStylesheet library="css" name="style.css" />
+		<h:outputScript library="js" name="app.js" />
+	</h:head>
+
+	<f:metadata>
+		<f:viewParam name="id" value="#{generoController.idGenero}" />
+		<f:event listener="#{generoController.prepararParaEditar}"
+			type="preRenderView"></f:event>
+	</f:metadata>
+
+
+
+	<ui:define name="content">
+		<h:body>
+
+			<div class="ui-fluid">
+
+				<h:form id="menu">
+					<p:menubar>
+						<p:submenu icon="pi pi-file" label="Cadastrar">
+							<p:menuitem outcome="/pages/cadastro/genero" value="Gênero" />
+						</p:submenu>
+
+						<p:submenu icon="pi pi-list" label="Listar">
+							<p:menuitem outcome="/pages/exibir/generos" value="Gêneros" />
+						</p:submenu>
+					</p:menubar>
+				</h:form>
+
+				<div class="ui-g-12">
+					<p:growl id="msg" life="4000" showDetail="true" />
+				</div>
+
+				<h:form id="form">
+
+					<h1>#{generoController.genero.id == null ? 'Cadastrar' :
+						'Editar'} gênero</h1>
+
+			
+					<div class="ui-g-4 ui-lg-4 ui-md-8 ui-sm-12">
+						<p:outputLabel for="nome" value="Nome" />
+						<p:inputText id="nome"
+							value="#{generoController.genero.nome}" required="true"
+							requiredMessage="Campo 'Nome' é obrigatório" />
+						<p:message for="nome" />
+					</div>
+					
+					<br/>
+
+					<div class="ui-g-2 ui-lg-2 ui-md-4 ui-sm-12">
+						<p:commandButton
+							rendered="#{generoController.genero.id == null}"
+							action="#{generoController.cadastrar}" value="Cadastrar"
+							update="form" icon="fa fa-save" />
+
+						<p:commandButton
+							rendered="#{generoController.genero.id != null}"
+							action="#{generoController.editar}" value="Editar"
+							update="form" icon="fa fa-pencil" />
+					</div>
+
+				</h:form>
+			</div>
+
+		</h:body>
+	</ui:define>
+</ui:composition>
