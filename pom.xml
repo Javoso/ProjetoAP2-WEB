@@ -42,7 +42,7 @@
 
 		<org.springframework-security-config.version>3.1.4.RELEASE</org.springframework-security-config.version>
 
-		<org.springframework-security-core.version>4.1.1.RELEASE</org.springframework-security-core.version>
+		<org.springframework-security-core.version>4.1.5.RELEASE</org.springframework-security-core.version>
 
 		<javax.servlet.version>3.0.1</javax.servlet.version>
 
@@ -137,7 +137,7 @@
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
-			<version>${org.springframework-security-core.version}</version>
+			<version>4.1.5.RELEASE</version>
 		</dependency>
 
 		<dependency>
