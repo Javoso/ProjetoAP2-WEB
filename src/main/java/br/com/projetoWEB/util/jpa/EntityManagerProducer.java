@@ -14,7 +14,7 @@ public class EntityManagerProducer {
 	private EntityManagerFactory factory;
 	
 	public EntityManagerProducer() {
-		factory = Persistence.createEntityManagerFactory("tbweb");
+		factory = Persistence.createEntityManagerFactory("tbap2web");
 	}
 	
 	@Produces @RequestScoped

@@ -5,10 +5,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-import br.com.projetoWEB.model.Ator;
+import br.com.projetoWEB.model.Aluno;
 
-@FacesConverter(forClass = Ator.class, value = "atorConverter")
-public class AtorConverter implements Converter {
+@FacesConverter(forClass = Aluno.class, value = "atorConverter")
+public class AlunoConverter implements Converter {
 	@Override
 	public Object getAsObject(FacesContext arg0, UIComponent arg1, String string) {
 		if (string == null || string.isEmpty())
@@ -18,10 +18,10 @@ public class AtorConverter implements Converter {
 
 	@Override
 	public String getAsString(FacesContext arg0, UIComponent arg1, Object object) {
-		Ator ator = (Ator) object;
-		if (ator == null || ator.getNome() == null)
+		Aluno ator = (Aluno) object;
+		if (ator == null || ator.getNomeAluno() == null)
 			return null;
-		arg1.getAttributes().put(String.valueOf(ator.getNome()), ator);
-		return String.valueOf(ator.getNome());
+		arg1.getAttributes().put(String.valueOf(ator.getNomeAluno()), ator);
+		return String.valueOf(ator.getNomeAluno());
 	}
 }

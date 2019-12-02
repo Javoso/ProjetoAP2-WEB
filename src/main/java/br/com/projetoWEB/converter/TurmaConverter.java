@@ -5,10 +5,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-import br.com.projetoWEB.model.Genero;
+import br.com.projetoWEB.model.Turma;
 
-@FacesConverter(forClass = Genero.class, value = "generoConverter")
-public class GeneroConverter implements Converter {
+@FacesConverter(forClass = Turma.class, value = "generoConverter")
+public class TurmaConverter implements Converter {
 	@Override
 	public Object getAsObject(FacesContext arg0, UIComponent arg1, String string) {
 		if (string == null || string.isEmpty())
@@ -18,10 +18,10 @@ public class GeneroConverter implements Converter {
 
 	@Override
 	public String getAsString(FacesContext arg0, UIComponent arg1, Object object) {
-		Genero genero = (Genero) object;
-		if (genero == null || genero.getNome() == null)
+		Turma genero = (Turma) object;
+		if (genero == null || genero.getNomeDaTurma() == null)
 			return null;
-		arg1.getAttributes().put(String.valueOf(genero.getNome()), genero);
-		return String.valueOf(genero.getNome());
+		arg1.getAttributes().put(String.valueOf(genero.getNomeDaTurma()), genero);
+		return String.valueOf(genero.getNomeDaTurma());
 	}
 }

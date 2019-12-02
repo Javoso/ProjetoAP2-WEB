@@ -1,29 +1,23 @@
 package br.com.projetoWEB.model;
 
 import java.io.Serializable;
-import java.util.List;
 
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.MappedSuperclass;
 
-@Entity
-public class Genero implements Serializable {
-	private static final long serialVersionUID = 1390696547088291799L;
+@MappedSuperclass
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+public class EntityGeneric implements Serializable {
 
+	private static final long serialVersionUID = -2147654125839992734L;
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
-	private String nome;
-
-	public Genero() {
-	};
-
-	public Genero(String nome, List<Filme> filmes) {
-		super();
-		this.nome = nome;
-	}
 
 	public Long getId() {
 		return id;
@@ -31,14 +25,6 @@ public class Genero implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
 	}
 
 	@Override
@@ -57,7 +43,7 @@ public class Genero implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Genero other = (Genero) obj;
+		EntityGeneric other = (EntityGeneric) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -65,10 +51,4 @@ public class Genero implements Serializable {
 			return false;
 		return true;
 	}
-
-	@Override
-	public String toString() {
-		return "Genero [id=" + id + ", nome=" + nome + "]";
-	}
-
 }

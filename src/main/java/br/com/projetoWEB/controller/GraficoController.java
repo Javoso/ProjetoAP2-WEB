@@ -16,9 +16,9 @@ import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.PieChartModel;
 
 import br.com.projetoWEB.dao.GenericDAO;
-import br.com.projetoWEB.model.Ator;
-import br.com.projetoWEB.model.Filme;
-import br.com.projetoWEB.model.Genero;
+import br.com.projetoWEB.model.Aluno;
+import br.com.projetoWEB.model.FrequenciaAula;
+import br.com.projetoWEB.model.Turma;
 import br.com.projetoWEB.util.jsf.FacesUtil;
 
 @Named
@@ -34,60 +34,61 @@ public class GraficoController implements Serializable {
 
 	private PieChartModel pieModel3 = new PieChartModel();
 
-	private Ator ator = new Ator();
+	private Aluno aluno = new Aluno();
 
-	private Genero genero = new Genero();
+	private Turma turma = new Turma();
 
-	private Filme filme = new Filme();
+	private FrequenciaAula frequenciaAula = new FrequenciaAula();
 
-	private List<Filme> filmesPorGenero = new ArrayList<>();
+	private List<FrequenciaAula> frequenciaAulasPorTurma = new ArrayList<>();
 
-	private List<Filme> filmesPorAtor = new ArrayList<>();
-
-	@Inject
-	private GenericDAO<Filme> filmeDao = new GenericDAO<>();
+	private List<FrequenciaAula> frequenciaAulasPorAluno = new ArrayList<>();
 
 	@Inject
-	private GenericDAO<Ator> atorDao = new GenericDAO<>();
+	private GenericDAO<FrequenciaAula> frequenciaAulaDao = new GenericDAO<>();
 
 	@Inject
-	private GenericDAO<Genero> generoDao = new GenericDAO<>();
+	private GenericDAO<Aluno> alunoDao = new GenericDAO<>();
+
+	@Inject
+	private GenericDAO<Turma> turmaDao = new GenericDAO<>();
 
 	public void preRender() {
-		if (isNull(genero.getId()) && isNull(ator.getId())) {
-			adcionarValueFull("Atores por Filme");
+		if (isNull(turma.getId()) && isNull(aluno.getId())) {
+			adcionarValueFull("Alunoes por FrequenciaAula");
 			FacesUtil.addMensagem().info("Esse é o grafíco default!").para("msg").mantendoMensagemAposRedirect();
 		}
-		initPieModel("Filmes por gênero");
-		initModel("Filmes por ator");
-		initModelFilme("Atores por filme");
+		initPieModel("FrequenciaAulas por gênero");
+		initModel("FrequenciaAulas por aluno");
+		initModelFrequenciaAula("Alunoes por frequenciaAula");
 
 		FacesUtil.addMensagem().info("Grafícos de pizza foram inicializados.").para("msg")
 				.mantendoMensagemAposRedirect();
 	}
 
-	public void selectGenero() {
-		adcionarValueGenero("Atores por Filme");
+	public void selectTurma() {
+		adcionarValueTurma("Alunoes por FrequenciaAula");
 		FacesUtil.addMensagem().info("Grafíco por gênero inicializado.").para("msg").mantendoMensagemAposRedirect();
 	}
 
-	public void selectAtor() {
-		adcionarValueAtor("Filme por Ator");
-		FacesUtil.addMensagem().info("Grafíco por ator inicializado.").para("msg").mantendoMensagemAposRedirect();
+	public void selectAluno() {
+		adcionarValueAluno("FrequenciaAula por Aluno");
+		FacesUtil.addMensagem().info("Grafíco por aluno inicializado.").para("msg").mantendoMensagemAposRedirect();
 	}
 
-	private void adcionarValueAtor(String titulo) {
+	private void adcionarValueAluno(String titulo) {
 		ChartSeries serie = null;
-		if (nonNull(ator.getId())) {
-			filmesPorAtor = filmeDao.findByAtributeWithJoinStatusAtivado("filmesPorAtor", "nomeAtor", ator.getNome());
-			if (nonNull(filmesPorAtor)) {
+		if (nonNull(aluno.getId())) {
+			frequenciaAulasPorAluno = frequenciaAulaDao.findByAtributeWithJoinStatusAtivado("frequenciaAulasPorAluno",
+					"nomeAluno", aluno.getNomeAluno());
+			if (nonNull(frequenciaAulasPorAluno)) {
 				serie = new ChartSeries();
-				serie.setLabel(ator.getNome());
-				for (Filme filme : filmesPorAtor) {
-					serie.set(filme.getNome(), filme.getAtores().size());
+				serie.setLabel(aluno.getNomeAluno());
+				for (FrequenciaAula frequenciaAula : frequenciaAulasPorAluno) {
+					serie.set(frequenciaAula.getTurma().getNomeDaTurma(), frequenciaAula.getAlunosFrequentes().size());
 				}
 				this.modelBar.setTitle(titulo);
-				this.modelBar.setLegendLabel("Filmes por Ator");
+				this.modelBar.setLegendLabel("FrequenciaAulas por Aluno");
 				this.modelBar.setAnimate(true);
 				this.modelBar.setShowPointLabels(true);
 				this.modelBar.setShowDatatip(true);
@@ -98,17 +99,17 @@ public class GraficoController implements Serializable {
 		}
 	}
 
-	private void adcionarValueGenero(String titulo) {
+	private void adcionarValueTurma(String titulo) {
 		ChartSeries serie = new ChartSeries(titulo);
-		if (nonNull(genero.getId())) {
-			filmesPorGenero = filmeDao.findByAtributeList(Filme.class, "genero", genero);
-			if (nonNull(filmesPorGenero)) {
-				for (Filme filme : filmesPorGenero) {
-					serie.setLabel(filme.getNome());
-					serie.set(filme.getNome(), filme.getAtores().size());
+		if (nonNull(turma.getId())) {
+			frequenciaAulasPorTurma = frequenciaAulaDao.findByAtributeList(FrequenciaAula.class, "turma", turma);
+			if (nonNull(frequenciaAulasPorTurma)) {
+				for (FrequenciaAula frequenciaAula : frequenciaAulasPorTurma) {
+					serie.setLabel(frequenciaAula.getTurma().getNomeDaTurma());
+					serie.set(frequenciaAula.getTurma().getNomeDaTurma(), frequenciaAula.getAlunosFrequentes().size());
 				}
 				this.modelBar.setTitle(titulo);
-				this.modelBar.setLegendLabel("Filmes por Gênero");
+				this.modelBar.setLegendLabel("FrequenciaAulas por Gênero");
 				this.modelBar.setAnimate(true);
 				this.modelBar.setShowPointLabels(true);
 				this.modelBar.setShowDatatip(true);
@@ -138,12 +139,12 @@ public class GraficoController implements Serializable {
 
 	private void adcionarValueFull(String titulo) {
 		ChartSeries serie = new ChartSeries(titulo);
-		for (Filme filme : filmeDao.findAll(Filme.class)) {
-			serie.setLabel(filme.getNome());
-			serie.set(filme.getNome(), filme.getAtores().size());
+		for (FrequenciaAula frequenciaAula : frequenciaAulaDao.findAll(FrequenciaAula.class)) {
+			serie.setLabel(frequenciaAula.getTurma().getNomeDaTurma());
+			serie.set(frequenciaAula.getTurma().getNomeDaTurma(), frequenciaAula.getAlunosFrequentes().size());
 		}
 		this.modelBar.setTitle(titulo);
-		this.modelBar.setLegendLabel("Filmes");
+		this.modelBar.setLegendLabel("FrequenciaAulas");
 		this.modelBar.setAnimate(true);
 		this.modelBar.addSeries(serie);
 		this.modelBar.setShowPointLabels(true);
@@ -152,8 +153,9 @@ public class GraficoController implements Serializable {
 	}
 
 	private void initPieModel(String rotulo) {
-		for (Genero genero : generoDao.findAll(Genero.class)) {
-			pieModel.set(genero.getNome(), filmeDao.findByAtributeList(Filme.class, "genero", genero).size());
+		for (Turma turma : turmaDao.findAll(Turma.class)) {
+			pieModel.set(turma.getNomeDaTurma(),
+					frequenciaAulaDao.findByAtributeList(FrequenciaAula.class, "turma", turma).size());
 		}
 		pieModel.setLegendPosition("e");
 		pieModel.setFill(false);
@@ -164,9 +166,10 @@ public class GraficoController implements Serializable {
 	}
 
 	private void initModel(String rotulo) {
-		for (Ator ator : atorDao.findAll(Ator.class)) {
-			pieModel2.set(ator.getNome(),
-					filmeDao.findByAtributeWithJoinStatusAtivado("filmesPorAtor", "nomeAtor", ator.getNome()).size());
+		for (Aluno aluno : alunoDao.findAll(Aluno.class)) {
+			pieModel2.set(aluno.getNomeAluno(), frequenciaAulaDao
+					.findByAtributeWithJoinStatusAtivado("frequenciaAulasPorAluno", "nomeAluno", aluno.getNomeAluno())
+					.size());
 		}
 		pieModel2.setLegendPosition("e");
 		pieModel2.setFill(false);
@@ -176,9 +179,9 @@ public class GraficoController implements Serializable {
 		pieModel2.setTitle(rotulo);
 	}
 
-	private void initModelFilme(String rotulo) {
-		for (Filme filme : filmeDao.findAll(Filme.class)) {
-			pieModel3.set(filme.getNome(), filme.getAtores().size());
+	private void initModelFrequenciaAula(String rotulo) {
+		for (FrequenciaAula frequenciaAula : frequenciaAulaDao.findAll(FrequenciaAula.class)) {
+			pieModel3.set(frequenciaAula.getTurma().getNomeDaTurma(), frequenciaAula.getAlunosFrequentes().size());
 		}
 		pieModel3.setLegendPosition("w");
 		pieModel3.setFill(false);
@@ -205,27 +208,27 @@ public class GraficoController implements Serializable {
 		return pieModel3;
 	}
 
-	public Ator getAtor() {
-		return ator;
+	public Aluno getAluno() {
+		return aluno;
 	}
 
-	public void setAtor(Ator ator) {
-		this.ator = ator;
+	public void setAluno(Aluno aluno) {
+		this.aluno = aluno;
 	}
 
-	public Genero getGenero() {
-		return genero;
+	public Turma getTurma() {
+		return turma;
 	}
 
-	public void setGenero(Genero genero) {
-		this.genero = genero;
+	public void setTurma(Turma turma) {
+		this.turma = turma;
 	}
 
-	public Filme getFilme() {
-		return filme;
+	public FrequenciaAula getFrequenciaAula() {
+		return frequenciaAula;
 	}
 
-	public void setFilme(Filme filme) {
-		this.filme = filme;
+	public void setFrequenciaAula(FrequenciaAula frequenciaAula) {
+		this.frequenciaAula = frequenciaAula;
 	}
 }
