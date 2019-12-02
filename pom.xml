@@ -11,9 +11,6 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-		<!-- FileUpload -->
-		<commons.fileupload.version> 1.3.1</commons.fileupload.version>
-
 		<!-- Hibernate / JPA -->
 		<hibernate.version>4.3.9.Final</hibernate.version>
 
@@ -45,7 +42,7 @@
 
 		<org.springframework-security-config.version>3.1.4.RELEASE</org.springframework-security-config.version>
 
-		<org.springframework-security-core.version>3.1.4.RELEASE</org.springframework-security-core.version>
+		<org.springframework-security-core.version>4.1.1.RELEASE</org.springframework-security-core.version>
 
 		<javax.servlet.version>3.0.1</javax.servlet.version>
 
@@ -71,11 +68,6 @@
 			<version>${primefaces.extensions.version}</version>
 		</dependency>
 
-		<dependency>
-			<groupId>commons-fileupload</groupId>
-			<artifactId>commons-fileupload</artifactId>
-			<version>${commons.fileupload.version}</version>
-		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
