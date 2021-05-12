@@ -38,7 +38,7 @@
 
 		<org.apache.xmlbeans.version>3.1.0</org.apache.xmlbeans.version>
 
-		<org.springframework-security-web.version>3.1.4.RELEASE</org.springframework-security-web.version>
+		<org.springframework-security-web.version>5.2.10.RELEASE</org.springframework-security-web.version>
 
 		<org.springframework-security-config.version>3.1.4.RELEASE</org.springframework-security-config.version>
 
