@@ -15,7 +15,7 @@
 		<hibernate.version>4.3.9.Final</hibernate.version>
 
 		<!-- Driver MySQL -->
-		<mysql.connector.version>8.0.17</mysql.connector.version>
+		<mysql.connector.version>8.0.28</mysql.connector.version>
 
 		<!-- Primefaces -->
 		<primefaces.version>7.0</primefaces.version>
