@@ -32,7 +32,7 @@
 		<!-- Apache Commons -->
 		<org.apache.commons.version>3.4</org.apache.commons.version>
 
-		<org.apache.poi.version>3.17</org.apache.poi.version>
+		<org.apache.poi.version>4.1.1</org.apache.poi.version>
 
 		<com.lowagie.version>2.1.7</com.lowagie.version>
 
