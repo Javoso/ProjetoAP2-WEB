@@ -32,42 +32,20 @@
 		<!-- Apache Commons -->
 		<org.apache.commons.version>3.4</org.apache.commons.version>
 
-		<org.apache.poi.version>3.17</org.apache.poi.version>
-
 		<com.lowagie.version>2.1.7</com.lowagie.version>
 
 		<org.apache.xmlbeans.version>3.1.0</org.apache.xmlbeans.version>
 
-		<org.springframework-security-web.version>3.1.4.RELEASE</org.springframework-security-web.version>
-
 		<org.springframework-security-config.version>3.1.4.RELEASE</org.springframework-security-config.version>
-
-		<org.springframework-security-core.version>4.1.5.RELEASE</org.springframework-security-core.version>
 
 		<javax.servlet.version>3.0.1</javax.servlet.version>
 
 		<commons-loggin.version>1.2</commons-loggin.version>
 
-		<primefaces.extensions.version>6.2.11</primefaces.extensions.version>
-
-		<!-- <hibernate.jpamodelgen.version>1.0.0.Final</hibernate.jpamodelgen.version> -->
-
 	</properties>
 
 	<dependencies>
-
-		<!-- <dependency> -->
-		<!-- <groupId>org.hibernate</groupId> -->
-		<!-- <artifactId>hibernate-jpamodelgen</artifactId> -->
-		<!-- <version>${hibernate.jpamodelgen.version}</version> -->
-		<!-- </dependency> -->
-
-		<dependency>
-			<groupId>org.primefaces.extensions</groupId>
-			<artifactId>primefaces-extensions</artifactId>
-			<version>${primefaces.extensions.version}</version>
-		</dependency>
-
+		
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
@@ -110,13 +88,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>${mysql.connector.version}</version>
-			<scope>compile</scope>
-		</dependency>
-
-		<dependency>
 			<groupId>org.apache.xmlbeans</groupId>
 			<artifactId>xmlbeans</artifactId>
 			<version>${org.apache.xmlbeans.version}</version>
@@ -127,31 +98,13 @@
 			<artifactId>itext</artifactId>
 			<version>${com.lowagie.version}</version>
 		</dependency>
-
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi</artifactId>
-			<version>${org.apache.poi.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-core</artifactId>
-			<version>4.2.0.RELEASE</version>
-		</dependency>
-
+		
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
 			<version>${org.springframework-security-config.version}</version>
 		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-web</artifactId>
-			<version>${org.springframework-security-web.version}</version>
-		</dependency>
-
+		
 		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
@@ -163,6 +116,37 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<version>${javax.servlet.version}</version>
 			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.3.3</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>4.1.1</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.28</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>5.5.7</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>5.4.4</version>
 		</dependency>
 
 	</dependencies>
